@@ -1,0 +1,33 @@
+name: Bot
+
+on:
+  schedule:
+    - cron: "0 */6 * * *"
+  # Runs every day at midnight (UTC)
+  workflow_dispatch:     # Allows manual triggering
+
+env:
+  ACTIONS_ALLOW_UNSECURE_COMMANDS: true  # Required for FFmpeg installation
+  TOKEN: ${{ secrets.TOKEN}}
+
+jobs:
+  Run_Bot:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: '3.12.2'
+
+      - name: Install requirements
+        run: pip install -r requirements.txt
+
+      - name: Test env vars for python
+        run: TEST_SECRET=${{ secrets.API}}
+
+      - name: Run Bot
+        run: python main.py
