@@ -10,11 +10,7 @@ intents = discord.Intents.default()
 bot = commands.Bot(command_prefix="/", intents=intents)
 
 
-print("File exists?", os.path.isfile("cookies.txt"))
-with open("cookies.txt", "r") as f:
-    print("First few lines of cookies.txt:")
-    for i in range(5):
-        print(f.readline())
+
 
 
 # Function to get public video URL
@@ -59,6 +55,11 @@ async def on_ready():
     try:
         await bot.tree.sync()
         print(f"Logged in as {bot.user}")
+        print("File exists?", os.path.isfile("cookies.txt"))
+        with open("cookies.txt", "r") as f:
+            print("First few lines of cookies.txt:")
+            for i in range(5):
+                print(f.readline())
     except Exception as e:
         print(f"Error syncing commands: {e}")
 
