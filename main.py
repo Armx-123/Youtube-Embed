@@ -9,6 +9,14 @@ TOKEN = os.environ['TOKEN']
 intents = discord.Intents.default()
 bot = commands.Bot(command_prefix="/", intents=intents)
 
+
+print("File exists?", os.path.isfile("cookies.txt"))
+with open("cookies.txt", "r") as f:
+    print("First few lines of cookies.txt:")
+    for i in range(5):
+        print(f.readline())
+
+
 # Function to get public video URL
 def get_public_video_url(youtube_url):
     ydl_opts = {
