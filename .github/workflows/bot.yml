@@ -9,6 +9,7 @@ on:
 env:
   ACTIONS_ALLOW_UNSECURE_COMMANDS: true  # Required for FFmpeg installation
   TOKEN: ${{ secrets.TOKEN}}
+  File: ${{secrets.COOKIES_BASE64}}
 
 jobs:
   Run_Bot:
@@ -22,12 +23,16 @@ jobs:
         uses: actions/setup-python@v3
         with:
           python-version: '3.12.2'
-
+      
       - name: Install requirements
         run: pip install -r requirements.txt
 
       - name: Test env vars for python
         run: TEST_SECRET=${{ secrets.API}}
-
+        
+      - name: Decode cookies
+        run: echo ${{ secrets.COOKIES_BASE64 }} | certutil -decode - cookies.txt
+        shell: cmd
+        
       - name: Run Bot
         run: python main.py
