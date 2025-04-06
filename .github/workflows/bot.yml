@@ -35,6 +35,8 @@ jobs:
         run: |
           $bytes = [System.Convert]::FromBase64String("${{ secrets.COOKIES_BASE64 }}")
           [System.IO.File]::WriteAllBytes("cookies.txt", $bytes)
+      - name: Show first few lines of cookies.txt
+        run: head -n 10 cookies.txt
 
 
         
