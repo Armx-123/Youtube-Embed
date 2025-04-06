@@ -14,7 +14,7 @@ def get_public_video_url(youtube_url):
     ydl_opts = {
         'quiet': True,
         'format': '18/best',  # Prioritize itag=18 (MP4, 360p)
-        'cookiefile': 'cookies.txt'
+        'cookies': 'cookies.txt'
     }
     
     with yt_dlp.YoutubeDL(ydl_opts) as ydl:
