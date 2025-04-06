@@ -30,9 +30,12 @@ jobs:
       - name: Test env vars for python
         run: TEST_SECRET=${{ secrets.API}}
         
-      - name: Decode cookies
-        run: echo ${{ secrets.COOKIES_BASE64 }} | certutil -decode - cookies.txt
-        shell: cmd
+      - name: Decode cookies.txt from base64 secret
+        shell: pwsh
+        run: |
+          $bytes = [System.Convert]::FromBase64String("${{ secrets.COOKIES_BASE64 }}")
+          [System.IO.File]::WriteAllBytes("cookies.txt", $bytes)
+
         
       - name: Run Bot
         run: python main.py
