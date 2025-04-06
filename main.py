@@ -52,10 +52,14 @@ async def get_video(interaction: discord.Interaction, youtube_url: str):
 # Sync commands and run bot
 @bot.event
 async def on_ready():
+    print("on_ready fired!")  # Log this early
     try:
-        await bot.tree.sync()
-        print("Bot is ready!")
-        print(f"Logged in as {bot.user}")
+        print("Syncing commands...")
+        synced = await bot.tree.sync()
+        print(f"Synced {len(synced)} commands.")
+        
+        print(f"Logged in as {bot.user} (ID: {bot.user.id})")
+        
         if os.path.isfile("cookies.txt"):
             print("cookies.txt found!")
             with open("cookies.txt", "r") as f:
@@ -65,6 +69,7 @@ async def on_ready():
         else:
             print("cookies.txt not found.")
     except Exception as e:
-        print(f"Error in on_ready: {e}")
+        print(f"Error during on_ready: {e}")
+
 
 bot.run(TOKEN)
